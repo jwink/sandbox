@@ -34,6 +34,51 @@ function replaceSeqWilds(tileArr) {
 }
 
 
+function seqOrSame(tileArr) {
+    if (tileArr[0].number == tileArr[1].number) {
+        return 'same';
+    } else {
+        return 'seq';
+    }
+}
+
+
+function seqValid(tileArr) {
+    var currNumber = tileArr[0].number;
+    var seqColor = tileArr[0].color;
+    for (var i = 1; i<tileArr.length; i++) {
+        if (tileArr[i].color != seqColor) {
+            return 'error';
+        } else {
+            if (tileArr[i].number - currNumber != 1) {
+                return 'error';
+            } else {
+                currNumber = tileArr[i].number;
+            }
+        }
+    }
+    return 'valid';
+}
+
+function sameValid(tileArr) {
+    var colorArr = [tileArr[0].color];
+    var currNumber = tileArr[0].number;
+    for (var i=1; i<tileArr.length; i++) {
+        if (tileArr[i].number != currNumber) {
+            return 'error';
+        } else {
+            if (colorArr.indexOf(tileArr[i].color) != -1) {
+                return 'error';
+            } else {
+                colorArr.push(tileArr[i].color);
+            }
+        }
+    }
+    return 'valid';
+}
+
+
+
 var tiles = [];
 
 var colors = [1, 2, 3,4];
@@ -58,7 +103,8 @@ tiles.push(w2);
 
 //console.log(tiles);
 
-var testArray = [2,105,4,11,12,13];
+var testArray = [15,28,41,54];
+var testArray = [2,3,17];
 var testTiles = [];
 for (var i = 0; i<testArray.length; i++) {
     testTiles.push(tiles[testArray[i]-1]);
@@ -67,6 +113,10 @@ for (var i = 0; i<testArray.length; i++) {
 console.log(testTiles);
 
 console.log(replaceSeqWilds(testTiles));
+
+console.log(seqOrSame(testTiles));
+console.log(sameValid(testTiles));
+console.log(seqValid(testTiles));
 
 
 
